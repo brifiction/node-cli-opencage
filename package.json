@@ -1,7 +1,7 @@
 {
   "name": "node-cli-opencage",
   "version": "1.0.0",
-  "description": "",
+  "description": "code challenge to build node cli application with geocoding API",
   "main": "index.js",
   "scripts": {
     "dev": "node main.js",
@@ -12,8 +12,8 @@
     "url": "git+https://github.com/brifiction/node-cli-opencage.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "brian ng",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/brifiction/node-cli-opencage/issues"
   },
