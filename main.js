@@ -10,6 +10,7 @@
  *      E.g. Fake Street is a real street on Earth. Lol.
  *   2. Initially wanted to try out stdout, unable to apply proper usage in this repo.
  * 
+ * Command: Run in console / terminal => 'npm run dev'
  */
 
 'use strict';
