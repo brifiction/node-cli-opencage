@@ -1,36 +1,18 @@
-// const opencage = require('opencage-api-client');
-
-// opencage.geocode({q: 'Theresienhöhe 11, München'}).then(data => {
-//   console.log(JSON.stringify(data));
-//   if (data.status.code == 200) {
-//     if (data.results.length > 0) {
-//       var place = data.results[0];
-//       console.log(place.formatted);
-//       console.log(place.geometry);
-//       console.log(place.annotations.timezone.name);
-//     }
-//   } else if (data.status.code == 402) {
-//     console.log('hit free-trial daily limit');
-//     console.log('become a customer: https://opencagedata.com/pricing'); 
-//   } else {
-//     // other possible response codes:
-//     // https://opencagedata.com/api#codes
-//     console.log('error', data.status.message);
-//   }
-// }).catch(error => {
-//   console.log('error', error.message);
-// });
-
 /**
- * CLI Command Input + Validation with Inquirer.js
+ * OpenCage API Client Demo + InquirerJS
  * 
  */
 
 'use strict';
 var inquirer = require('inquirer');
 
+// Add OpenCage API CLient
+const opencage = require('opencage-api-client');
+
+// Nice greeting 
 console.log('Hello! Welcome to the OpenCage CLI Test Application!');
 
+// Define inquirer questions and validation (optional)
 var questions = [
   {
     type: 'input',
@@ -84,7 +66,38 @@ var questions = [
   },
 ];
 
+/*
+ * Return all command inputs to check / verify.
+ * 
+ */
 inquirer.prompt(questions).then(answers => {
   console.log('\nYour Details:');
+  // return all answers
   console.log(JSON.stringify(answers, null, '  '));
+  // run opencage and parse address entered
+  opencage.geocode({q: answers.address }).then(data => {
+    // remove other data, not necessary
+    // console.log(JSON.stringify(data));
+    if (data.status.code == 200) {
+      if (data.results.length > 0) {
+        var place = data.results[0];
+        // formatted string of address input, pretty nice and with best guess?
+        console.log(place.formatted);
+        // returns latitute and longtitude
+        console.log(place.geometry);
+        // returns the timezone name, e.g. Australia/Melbourne
+        console.log(place.annotations.timezone.name);
+      }
+    } else if (data.status.code == 402) {
+      // i'm on free account, lol so all good?
+      console.log('hit free-trial daily limit');
+      console.log('become a customer: https://opencagedata.com/pricing'); 
+    } else {
+      // other possible response codes:
+      // https://opencagedata.com/api#codes
+      console.log('error', data.status.message);
+    }
+  }).catch(error => {
+    console.log('error', error.message);
+  });
 });
