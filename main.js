@@ -80,17 +80,7 @@ var questions = [
   {
     type: 'input',
     name: 'address',
-    message: "What's your address?",
-    validate: function(value) {
-      var pass = value.match(
-        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
-      );
-      if (pass) {
-        return true;
-      }
-
-      return 'Please enter a valid email address, thank you.';
-    }
+    message: "What's your address?"
   },
 ];
 
