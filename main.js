@@ -1,6 +1,15 @@
 /**
  * OpenCage API Client Demo + InquirerJS
  * 
+ * Goal: Output user answers at the end, asking user first & last name, email and address via CLI.
+ * 
+ * Issue(s): 
+ *   1. Don't know how to boolean check for Promise(s) used with Javascript, for address check.
+ *      This issue needs a fix.
+ *      Also, difficult to validate the most 'fake' address.
+ *      E.g. Fake Street is a real street on Earth. Lol.
+ *   2. Initially wanted to try out stdout, unable to apply proper usage in this repo.
+ * 
  */
 
 'use strict';
@@ -62,7 +71,39 @@ var questions = [
   {
     type: 'input',
     name: 'address',
-    message: "What's your address?"
+    message: "What's your address?",
+    validate: function (value) {
+      // run opencage and parse address entered
+      var verify = opencage.geocode({
+        q: value
+      }).then(data => {
+        // remove other data, not necessary
+        // console.log(JSON.stringify(data));
+        if (data.status.code == 200) {
+          if (data.results.length > 0) {
+            var place = data.results[0];
+            // formatted string of address input, pretty nice and with best guess?
+            console.log('We found your address: ' + place.formatted);
+            // returns latitute and longtitude
+            // console.log(place.geometry);
+            // returns the timezone name, e.g. Australia/Melbourne
+            // console.log(place.annotations.timezone.name);
+            return true;
+          }
+        } else {
+          return false;
+        }
+      }).catch(error => {
+        // console.log('error', error.message);
+        return false;
+      });
+
+      if(verify) {
+        return true;
+      }
+
+      return 'Try again.';
+    }
   },
 ];
 
@@ -73,31 +114,5 @@ var questions = [
 inquirer.prompt(questions).then(answers => {
   console.log('\nYour Details:');
   // return all answers
-  console.log(JSON.stringify(answers, null, '  '));
-  // run opencage and parse address entered
-  opencage.geocode({q: answers.address }).then(data => {
-    // remove other data, not necessary
-    // console.log(JSON.stringify(data));
-    if (data.status.code == 200) {
-      if (data.results.length > 0) {
-        var place = data.results[0];
-        // formatted string of address input, pretty nice and with best guess?
-        console.log(place.formatted);
-        // returns latitute and longtitude
-        console.log(place.geometry);
-        // returns the timezone name, e.g. Australia/Melbourne
-        console.log(place.annotations.timezone.name);
-      }
-    } else if (data.status.code == 402) {
-      // i'm on free account, lol so all good?
-      console.log('hit free-trial daily limit');
-      console.log('become a customer: https://opencagedata.com/pricing'); 
-    } else {
-      // other possible response codes:
-      // https://opencagedata.com/api#codes
-      console.log('error', data.status.message);
-    }
-  }).catch(error => {
-    console.log('error', error.message);
-  });
+  console.log(answers);
 });

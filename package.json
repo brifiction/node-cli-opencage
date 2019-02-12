@@ -20,6 +20,7 @@
   "homepage": "https://github.com/brifiction/node-cli-opencage#readme",
   "dependencies": {
     "inquirer": "^6.2.2",
+    "node-geocoder": "^3.22.0",
     "opencage-api-client": "^0.4.0"
   }
 }
