@@ -1,0 +1,23 @@
+{
+  "name": "node-cli-opencage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brifiction/node-cli-opencage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brifiction/node-cli-opencage/issues"
+  },
+  "homepage": "https://github.com/brifiction/node-cli-opencage#readme",
+  "dependencies": {
+    "opencage-api-client": "^0.4.0"
+  }
+}
